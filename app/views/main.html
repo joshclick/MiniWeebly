@@ -1,0 +1,65 @@
+<div id="tools">
+  <div class="title">Templates</div>
+  <div id="templates">
+    <div ng-repeat="page in pages" class="template-button blue" data-page="page_id_{{page.id}}">
+      <div class="icon edit"></div>
+      <div class="icon delete"></div>
+      <input class="edit" disabled="true" type="text" maxlength="10" value="{{page.name}}">
+    </div>
+    <div class="template-button new">
+      <div class="icon add"></div>
+      <input type="text" maxlength="10">
+      <span>Add a new page</span>
+    </div>
+  </div>
+  <div class="title">Elements</div>
+  <div id="elements">
+    <div class="elem-button bordr bordb">
+      <div id="title" class="icon"></div>
+      Title
+    </div>
+    <div class="elem-button bordb">
+      <div id="text" class="icon"></div>
+      Text
+    </div>
+    <div class="elem-button bordr">
+      <div id="image" class="icon"></div>
+      Image
+    </div>
+    <div class="elem-button">
+      <div id="nav" class="icon"></div>
+      Nav
+    </div>
+  </div>
+  <div class="title">Settings</div>
+  <div id="settings">
+    <div id="site-grid">
+      <div id="grid-toggle" class="icon"></div>
+      <span>Site Grid</span>
+    </div>
+  </div>
+</div>
+<div id="board">
+  <div id="pages">
+    <div ng-repeat="page in pages" class="page-button active" data-page="page_id_{{page.id}}"><span>{{page.name}}</span></div>
+  </div>
+  <div id="splash">
+    <a href="#">
+      <img src="static/img/Image-Placeholder.png">
+      Add Image +
+    </a>
+  </div>
+  <div id="content-cont">
+    <div class="content">
+      <div contenteditable="true" class="title">
+        <div contenteditable="false" class="del-icon"></div>
+        Add Title Here
+      </div>
+      <div contenteditable="true" class="text">
+        <div contenteditable="false" class="del-icon"></div>
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas sed diam eget risus varius blandit sit amet non magna.
+        Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus et magnis dis parturient montes. nascetur ridiculus mus. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+    </div>
+  </div>
+</div>

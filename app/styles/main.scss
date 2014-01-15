@@ -1,0 +1,367 @@
+@font-face {
+	font-family: proxnov;
+	src: url(/static/fonts/ProximaNova-Light.otf);
+	font-weight: lighter;
+}
+@font-face {
+	font-family: proxnov;
+	src: url(/static/fonts/ProximaNova-LightIt.otf);
+	font-weight: lighter;
+	font-style: italic;
+}
+@font-face {
+	font-family: proxnov;
+	src: url(/static/fonts/ProximaNova-Reg.otf);
+}
+@font-face {
+	font-family: proxnov;
+	src: url(/static/fonts/ProximaNova-RegIt.otf);
+	font-style: italic;
+}
+@font-face {
+	font-family: proxnov;
+	src: url(/static/fonts/ProximaNova-Sbold.otf);
+	font-weight: bold;
+}
+
+/* Globals */
+* {
+	transition: background-color 0.3s;
+	transition: opacity 0.3s;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: proxnov;
+}
+a {
+	text-decoration: none;
+}
+input {
+	background: none;
+	border: none;
+}
+
+
+header {
+	position: absolute;
+	z-index: 1;
+	height: 40px;
+	min-width: 1170px;
+	width: 100%;
+	background: #518dca;
+	padding-left: 30px;
+	border-bottom: 1px solid black; /* check color */
+}
+#tools {
+	float: left;
+	width: 235px;
+	min-height: 640px;
+	height: 100%;
+	background: #2c3e50;
+	padding-top: 40px;
+	box-sizing: border-box;
+	font-weight: bold;
+
+	.title {
+		background: #4f657b;
+		color: #9cb3ca;
+		text-transform: uppercase;
+		height: 30px;
+		line-height: 30px;
+		font-size: 13px;
+		text-align: center;
+		border-width: 2px 0;
+		border-style: solid;
+		border-color: #1a2733;
+	}
+
+	#templates {
+		min-height: 160px;
+		margin: 25px 30px; 
+
+		.template-button {
+			padding-left: 15px;
+			margin-bottom: 10px;
+			width: 155px;
+			height: 35px;
+			line-height: 36px;
+			display: block;
+			font-size: 13px;
+			font-weight: bold;
+			color: white;
+			text-transform: uppercase;
+			background: #4f657b;
+
+			border-radius: 3px;
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+
+			input {
+				margin-top: 9px;
+				padding-left: 2px;
+				position: absolute;
+				color: white;
+				font-family: proxnov;
+				font-size: 13px;
+				font-weight: bold;
+				text-transform: uppercase;
+				outline: none;
+				width: 115px;
+			}
+
+			.icon {
+				position: absolute;
+				background: url('/static/img/Add-Delete-Edit-Icons.png');
+				background-position-y: -13px;
+				height: 14px;
+				width: 14px;
+				margin-top: 10px;
+				opacity: 0;
+				cursor: pointer;
+
+
+				&.edit {
+					background-position-x: -33px;
+					left: 155px;
+				}
+				&.delete {
+					background-position-x: -53px;
+					left: 175px;
+				}
+
+				&.hover {
+					opacity: 0.5;
+					background-position-y: -32px;
+				}
+			}
+
+			&.blue { background: #518dca; }
+			&.red { background: #d86a65; }
+			&.new {
+				height: 31px;
+				width: 151px;
+				line-height: 32px;
+				border: 2px solid #4f657b;
+				background: none;
+				color: #4f657b;
+
+				input {
+					margin-top: 7px;
+					padding: 0;
+				}
+
+				.add {
+					opacity: 0.5;
+					background-position-x: -13px;
+					left: 175px;
+					margin-top: 8px;
+				}
+			}
+		}
+	}
+	#settings {
+		#site-grid {
+			height: 50px;
+			border-bottom: 2px solid #21313E;
+			span {
+				margin-left: 30px;
+				line-height: 50px;
+				color: #5e768e;
+				font-family: proxnov;
+				font-size: 13px;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+			#grid-toggle.icon {
+				position: absolute;
+				background: url('/static/img/Toggle-Switch.png') -6px -7px;
+				height: 22px;
+				width: 50px;
+				left: 152px;
+				margin-top: 14px;
+				cursor: pointer;
+				&:hover {
+					background-position-y: -32px;
+				}
+				&.active {
+					background-position-y: -57px;
+				}
+			}
+		}
+	}
+
+	#elements {
+		height: 218px;
+
+		.elem-button {
+			float: left;
+			display: block;
+			width: 116px;
+			height: 108px;
+			font-size: 13px;
+			font-weight: bold;
+			text-align: center;
+			color: #5e768e;
+			text-transform: uppercase;
+			cursor: move;
+
+			&:hover {
+				background: #3d5266;
+			}
+
+			&.bordr {
+				border-right: 2px solid black;
+			}
+			&.bordb {
+				border-bottom: 2px solid black;
+			}
+
+			.icon {
+				z-index: 20;
+				width: 52px;
+				height: 54px;
+				margin: 20px auto 8px;
+				background: url('/static/img/element-icons.png') -9px -8px;
+
+				box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+
+				&#title {
+					background-position-x: -9px;
+				}
+				&#text {
+					background-position-x: -63px;
+				}
+				&#image {
+					background-position-x: -117px;
+				}
+				&#nav {
+					background-position-x: -171px;
+				}
+
+				.ui-draggable {
+					z-index: 20;
+				}
+			}
+
+		}
+	}
+}
+
+
+
+#board {
+	margin-left: 235px;
+	min-width: 965px;
+	padding: 60px 55px 0;
+	box-sizing: border-box;
+	min-height: 640px;
+	height: 100%;
+	overflow-y: auto;
+	position: absolute;
+
+	box-shadow: 0 0 3px 4px rgba(0, 0, 0, 0.3);
+
+	#pages {
+		height: 40px;
+		padding: 30px 20px;
+
+		.page-button {
+			display: block;
+			float: left;
+			margin-left: 15px;
+			height: 35px;
+			width: 119px;
+			border: 2px solid #8498ac;
+			border-radius: 3px;
+			color: #97aabc;
+			cursor: pointer;
+
+			&.active {
+				background: #97aabc;
+				color: white;
+			}
+
+			&:first-child {
+				margin-left: 0;
+			}
+
+			span {
+				text-transform: uppercase;
+				text-align: center;
+				line-height: 35px;
+				font-size: 14px;
+				font-weight: bold;
+				margin: 0 10px;
+				width: 99px;
+				float: left;
+				overflow: hidden;
+			}
+		}
+	}
+	#splash {
+		margin: 20px;
+		background: #eff2f5;
+		height: 280px;
+		border: 2px solid #c0ccd8;
+		border-radius: 3px;
+
+		a {
+			display: block;
+			font-size: 12.45px;
+			color: #c0ccd8;
+			text-align: center;
+			text-transform: uppercase;
+
+			img {
+				margin: 65px auto -10px;
+				display: block;
+
+			}
+		}
+	}
+	#content-cont {
+		float: left;
+
+		.content {
+			float: left;
+			color: #4f657b;
+			width: 100%;
+			box-sizing: border-box;
+
+			& > div {
+				outline: none;
+				padding: 20px;
+
+				&:focus {
+					border: 2px solid #8ec8fb;
+					border-radius: 3px;
+					box-sizing: border-box;
+				}
+
+				.del-icon {
+					display: none;
+					float: right;
+					width: 38px;
+					height: 37px;
+					background: url('/static/img/Delete-Element.png') -9px -8px;
+					margin-top: -23px;
+					margin-right: -22px;
+					cursor: pointer;
+				}
+			}
+
+			.title {
+				font-size: 30px;
+				font-weight: bold;
+				margin: 20px 0;
+			}
+			.text {
+				font-weight: normal;
+				font-size: 14px;
+				line-height: 24px;
+				margin: 14px 0;
+			}
+		}
+	}
+}
