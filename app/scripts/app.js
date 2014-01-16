@@ -1,9 +1,6 @@
 'use strict';
 
 angular.module('miniweeblyApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
   'ngRoute'
 ])
   .config(function ($routeProvider) {
