@@ -71,15 +71,30 @@ angular.module('miniweeblyApp')
       console.log('Too many pages!');
     }
   };
-  $scope.activatePage = function(id) {
+  $scope.activatePage = function (id) {
     $scope.activePage = $scope.pages.filter(function (d) {
       return d.pageID === id;
     })[0];
   };
 
-  $scope.editContent = function(content) {
-    console.log(content);
-  };
-
   $scope.gridToggle = false; // need add hover state
+})
+// enable 2 way binding for contenteditable stuff
+.directive('contenteditable', function () {
+  return {
+    require: 'ngModel',
+    link: function (scope, elm, attrs, ctrl) {
+      // view -> model
+      elm.bind('blur', function () {
+          scope.$apply(function () {
+              ctrl.$setViewValue(elm.html());
+            });
+        });
+
+      // model -> view
+      ctrl.$render = function () {
+          elm.html(ctrl.$viewValue);
+        };
+    }
+  };
 });

@@ -48,9 +48,7 @@
     </a>
   </div>
   <div class="content" id="default" ng-model="activePage">
-    <div ng-repeat="content in activePage.contents" contenteditable="true" ng-class="content.type">
-      <div contenteditable="false" class="del-icon"></div>
-      {{content.value}}
+    <div ng-repeat="content in activePage.contents" contenteditable="true" ng-class="content.type" ng-model="content.value">
     </div>
   </div>
 </div>
