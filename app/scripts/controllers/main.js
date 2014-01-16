@@ -39,10 +39,19 @@ angular.module('miniweeblyApp')
   };
   $scope.addPage = function (title) {
     if ($scope.pages.length < 7 && title.length > 0) {
+      // add to pages
+      var newPageID = ++$scope.currID;
       $scope.pages.push({
-        id: ++$scope.currID,
+        id: newPageID,
         title: title
       });
+
+      // fill in placeholder content for page
+      var newContent = angular.copy($scope.contents[0]);
+      newContent.pageID = newPageID;
+      $scope.contents.push(newContent);
+
+      // reset text for add page
       $scope.newPageText = '';
     } else {
       console.log('Too many pages!');
