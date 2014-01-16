@@ -42,12 +42,19 @@ angular.module('miniweeblyApp')
       ]
     },
   ];
-  $scope.activePage = $scope.pages[1];
+  $scope.activePage = $scope.pages[0];
 
   $scope.deletePage = function (id) {
+    // deletes pages
     $scope.pages = $scope.pages.filter(function (page) {
-      return page.id !== id;
+      return page.pageID !== id;
     });
+
+    // sets new activepage if active page was deleted
+    if (id === $scope.activePage.pageID) {
+      $scope.activePage = $scope.pages[0];
+    }
+
     // need to add shrink and disappear animation
   };
   $scope.addPage = function (title) {
