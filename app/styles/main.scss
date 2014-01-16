@@ -57,6 +57,7 @@ header {
 
 #main-cont {
     height: 100%;
+    width: 100%;
 }
 
 #tools {
@@ -332,48 +333,42 @@ header {
 			}
 		}
 	}
-	#content-cont {
+
+	.content {
 		float: left;
+		color: #4f657b;
+		width: 100%;
+		box-sizing: border-box;
 
-		.content {
-			float: left;
-			color: #4f657b;
-			width: 100%;
-			box-sizing: border-box;
+		& > div {
+			outline: none;
+            margin: 10px 20px;
+			padding: 20px 0;
 
-			& > div {
-				outline: none;
-				padding: 20px;
-
-				&:focus {
-					border: 2px solid #8ec8fb;
-					border-radius: 3px;
-					box-sizing: border-box;
-				}
-
-				.del-icon {
-					display: none;
-					float: right;
-					width: 38px;
-					height: 37px;
-					background: url('/static/img/Delete-Element.png') -9px -8px;
-					margin-top: -23px;
-					margin-right: -22px;
-					cursor: pointer;
-				}
+			&:hover {
+				outline: 2px solid #8ec8fb;
 			}
 
-			.title {
-				font-size: 30px;
-				font-weight: bold;
-				margin: 20px 0;
+			.del-icon {
+				display: none;
+				float: right;
+				width: 38px;
+				height: 37px;
+				background: url('/static/img/Delete-Element.png') -9px -8px;
+				margin-top: -23px;
+				margin-right: -22px;
+				cursor: pointer;
 			}
-			.text {
-				font-weight: normal;
-				font-size: 14px;
-				line-height: 24px;
-				margin: 14px 0;
-			}
+		}
+
+		.title {
+			font-size: 30px;
+			font-weight: bold;
+		}
+		.text {
+			font-weight: normal;
+			font-size: 14px;
+			line-height: 24px;
 		}
 	}
 }
