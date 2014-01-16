@@ -77,6 +77,7 @@ angular.module('miniweeblyApp')
       })[0];
     };
 
+    // stuff for splash
     $scope.splashURL = '';
     $scope.defaultSplash = 'static/img/Image-Placeholder.png';
     $scope.setImage = function () {
@@ -84,7 +85,14 @@ angular.module('miniweeblyApp')
       $scope.splashURL = imgURL;
     };
 
-    $scope.gridToggle = false; // need add hover state
+    // stuff for editing content
+    $scope.removeContent = function (content) {
+      $scope.activePage.contents = $scope.activePage.contents.filter(function (d) {
+        return d !== content;
+      });
+    };
+
+    $scope.gridToggle = false;
   })
   // enable 2 way binding for contenteditable stuff
   .directive('contenteditable', function () {

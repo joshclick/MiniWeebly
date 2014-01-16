@@ -47,8 +47,8 @@
       <p ng-hide="splashURL">Add Image +</p>
     </a>
   </div>
-  <div class="content" id="default" ng-model="activePage">
-    <div ng-repeat="content in activePage.contents" contenteditable="true" ng-class="content.type" ng-model="content.value">
-    </div>
+  <div class="content" id="default" ng-repeat="content in activePage.contents" ng-model="activePage" ng-mouseover="hover=true"  ng-mouseleave="hover=false">
+    <div class="del-icon" ng-show="hover" ng-click="removeContent(content)"></div>
+    <div contenteditable="true" class="{{content.type}}" ng-class="{hover: hover}" ng-model="content.value"></div>
   </div>
 </div>
