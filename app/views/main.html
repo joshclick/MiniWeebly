@@ -49,14 +49,14 @@
     </a>
   </div>
   <div id="content-cont">
-    <div class="content" id="default">
+    <div class="content" id="default" ng-repeat="content in contents | filter:isActiveContent">
       <div contenteditable="true" class="title">
         <div contenteditable="false" class="del-icon"></div>
-        {{activeContent.title}}
+        {{content.title}}
       </div>
       <div contenteditable="true" class="text">
         <div contenteditable="false" class="del-icon"></div>
-        {{activeContent.text}}
+        {{content.text}}
       </div>
     </div>
   </div>
