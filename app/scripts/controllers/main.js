@@ -77,6 +77,13 @@ angular.module('miniweeblyApp')
       })[0];
     };
 
+    $scope.splashURL = '';
+    $scope.defaultSplash = 'static/img/Image-Placeholder.png';
+    $scope.setImage = function () {
+      var imgURL = window.prompt('', 'Enter Image URL Here');
+      $scope.splashURL = imgURL;
+    };
+
     $scope.gridToggle = false; // need add hover state
   })
   // enable 2 way binding for contenteditable stuff

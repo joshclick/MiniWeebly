@@ -313,8 +313,9 @@ header {
 	}
 	#splash {
 		margin: 20px;
+        padding: 20px;
 		background: #eff2f5;
-		height: 280px;
+		min-height: 240px;
 		border: 2px solid #c0ccd8;
 		border-radius: 3px;
 
@@ -324,11 +325,11 @@ header {
 			color: #c0ccd8;
 			text-align: center;
 			text-transform: uppercase;
+            cursor: pointer;
 
 			img {
-				margin: 65px auto -10px;
-				display: block;
-
+				margin: 45px auto -10px;
+                max-height: 300px
 			}
 		}
 	}

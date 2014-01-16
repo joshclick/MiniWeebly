@@ -42,9 +42,9 @@
     <div ng-repeat="page in pages" class="page-button" ng-class="{active: activePage.pageID == page.pageID}" ng-click="activatePage(page.pageID)"><span>{{page.pageName}}</span></div>
   </div>
   <div id="splash">
-    <a href="#">
-      <img src="static/img/Image-Placeholder.png">
-      Add Image +
+    <a ng-click="setImage()">
+      <img ng-src="{{splashURL || defaultSplash}}">
+      <p ng-hide="splashURL">Add Image +</p>
     </a>
   </div>
   <div class="content" id="default" ng-model="activePage">
