@@ -4,7 +4,7 @@ angular.module('miniweeblyApp')
 .controller('MainCtrl', function ($scope) {
   $scope.currPageID = 1;
   $scope.defaultPage = {
-    pageID: false,
+    pageID: null,
     pageName: 'Page',
     contents: [
       {
@@ -53,16 +53,10 @@ angular.module('miniweeblyApp')
   $scope.addPage = function (title) {
     if ($scope.pages.length < 7 && title.length > 0) {
       // add to pages
-      var newPageID = ++$scope.currPageID;
-      $scope.pages.push({
-        id: newPageID,
-        title: title
-      });
-
-      // fill in placeholder content for page
-      var newContent = angular.copy($scope.contents[0]);
-      newContent.pageID = newPageID;
-      $scope.contents.push(newContent);
+      var newPage = angular.copy($scope.defaultPage);
+      newPage.pageID = ++$scope.currPageID;
+      newPage.pageName = title;
+      $scope.pages.push(newPage);
 
       // reset text for add page
       $scope.newPageText = '';
