@@ -123,7 +123,7 @@ header {
 				height: 14px;
 				width: 14px;
 				margin-top: 10px;
-				// opacity: 0;
+				opacity: 0;
 				cursor: pointer;
 
 
@@ -136,9 +136,13 @@ header {
 					left: 175px;
 				}
 
-				&.hover {
-					opacity: 0.5;
-					background-position-y: -32px;
+                &.hover {
+                    opacity: 0.5;
+                    background-position-y: -32px;
+                }
+
+				&:hover {
+					opacity: 0.75;
 				}
 			}
 

@@ -4,7 +4,6 @@ angular.module('miniweeblyApp')
 .controller('MainCtrl', function ($scope) {
   $scope.currID = 1;
   $scope.activePage = 0;
-  $scope.gridToggle = false; // need add hover state
   $scope.pages = [{
       id: 0,
       title: 'Page'
@@ -27,7 +26,7 @@ angular.module('miniweeblyApp')
       text: 'Real content yo'
     },
   ];
-  $scope.activePage = $scope.content[0];
+  $scope.activeContent = $scope.content[0];
 
   $scope.deletePage = function (id) {
     $scope.pages = $scope.pages.filter(function (page) {
@@ -35,11 +34,11 @@ angular.module('miniweeblyApp')
     });
     // need to add shrink and disappear animation
   };
-  $scope.addPage = function () {
-    if ($scope.pages.length < 7) {
+  $scope.addPage = function (title) {
+    if ($scope.pages.length < 7 && title.length > 0) {
       $scope.pages.push({
         id: ++$scope.currID,
-        title: $scope.newPageText
+        title: title
       });
       $scope.newPageText = '';
     } else {
@@ -52,4 +51,6 @@ angular.module('miniweeblyApp')
       return d.pageID === $scope.activePage;
     })[0];
   };
+
+  $scope.gridToggle = false; // need add hover state
 });
