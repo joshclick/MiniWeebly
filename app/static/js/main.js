@@ -10,7 +10,7 @@ $('#elements .icon').draggable({
     },
     revertDuration: 100,
     drag: function(event, ui) {
-        var contentCont = $('#board'),
+        var contentCont = $('#content-cont'),
             content = $('.content'),
             uiLeft = ui.offset.left,
             uiTop = ui.offset.top,
@@ -34,7 +34,7 @@ $('#elements .icon').draggable({
         }
     },
     stop: function(event, ui) {
-        var contentCont = $('#board'),
+        var contentCont = $('#content-cont'),
             content = $('.content'),
             uiLeft = ui.offset.left,
             uiTop = ui.offset.top,

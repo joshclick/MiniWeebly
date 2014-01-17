@@ -1,1 +1,1 @@
-angular.module('miniweeblyApp', ['pageController', 'pageService']);
+angular.module('miniweeblyApp', ['pageController', 'pageService', 'contentService']);
