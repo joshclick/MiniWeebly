@@ -60,9 +60,9 @@ angular.module('pageController', [])
       return content.pageID === $scope.activePage._id;
     };
 
-    // stuff for editing content
-    $scope.removeContent = function (id) {
-      Contents.delete(id)
+    // stuff for adding content (title, text, image, nav)
+    $scope.addContent = function (type, id) {
+      Contents.create({type: type, id: id})
         .success(function (data) {
           $scope.contents = data;
         });
