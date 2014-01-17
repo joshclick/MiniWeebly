@@ -57,7 +57,7 @@ block content
       )
         .del-icon(ng-show='hover', ng-click='removeContent(content._id)')
         .val(ng-class='content.type'
-          contenteditable='true'
+          contenteditable='{{content.type != "image"}}'
           ng-model='content.value'
           ng-change='editContent("value", content.value, content._id)'
         )
