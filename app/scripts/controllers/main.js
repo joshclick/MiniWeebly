@@ -28,6 +28,9 @@ angular.module('pageController', [])
           .success(function (data) {
             $scope.newPageForm.title = '';
             $scope.pages = data;
+
+            if (!$scope.activePage)
+              $scope.activePage = $scope.pages[0];
           });
       }
     };
