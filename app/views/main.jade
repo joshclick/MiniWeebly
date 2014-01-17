@@ -15,14 +15,14 @@ block content
       .elem-button.bordr.bordb
         #title.icon(ng-click="addContent('title', activePage._id)")
         | Title
-      .elem-button.bordb(ng-click="addContent('text', activePage._id)")
-        #text.icon
+      .elem-button.bordb
+        #text.icon(ng-click="addContent('text', activePage._id)")
         | Text
-      .elem-button.bordr(ng-click="addContent('image', activePage._id)")
-        #image.icon
+      .elem-button.bordr
+        #image.icon(ng-click="addContent('image', activePage._id)")
         | Image
-      .elem-button(ng-click="addContent('nav', activePage._id)")
-        #nav.icon
+      .elem-button
+        #nav.icon(ng-click="addContent('nav', activePage._id)")
         | Nav
     .title Settings
     #settings

@@ -113,12 +113,80 @@ angular.module('pageController', [])
       scope.$watch("contents", function (value) {//I change here
           var val = value || null;
           if (val) {
-            $(element).parent('#content-cont').sortable();
+            $(element).parent('#content-cont').sortable({
+              create: function () {
+                $(this).height($(this).height());
+              }
+            });
             $(element)
               .resizable({
+                animate: true,
                 grid: $('#content-cont').width() / 10,
-                handles: 'e, w'
+                handles: 'e, w',
+                stop: function(e, ui) {
+                  var parent = ui.element.parent();
+                  ui.element.css({
+                      width: ui.element.width() / parent.width() * 100 + '%',
+                  });
+                }
               });
+
+            $('#content-cont').droppable();
+            $('#elements .icon').draggable({
+                zIndex: 100,
+                distance: 20,
+                containment: 'document',
+                revert: function(event) {
+                    $(this).data("ui-draggable").originalPosition = { top: 0, left: 0 };
+                    return !event;
+                },
+                revertDuration: 100,
+                drag: function(event, ui) {
+                    var contentCont = $('#content-cont'),
+                        content = $(element),
+                        uiLeft = ui.offset.left,
+                        uiTop = ui.offset.top,
+                        contLeft = contentCont.offset().left,
+                        contTop = contentCont.offset().top,
+                        contWidth = contentCont.width(),
+                        contHeight = contentCont.height();
+
+                    if (content.length > 1) return;
+                    if ($(this).attr('id') !== 'text') return;
+
+                    // if in #content-cont
+                    if (uiLeft > contLeft && uiTop > contTop) {
+                        content.css({width: '50%'});
+                        if (uiLeft < contLeft + contWidth/2) // on left
+                            content.css({float: 'right'});
+                        else if (uiLeft > contLeft + contWidth/2) // on right
+                            content.css({float: 'left'});
+                    } else {
+                        content.css({width: '100%', float: 'left'});
+                    }
+                },
+                stop: function(event, ui) {
+                    var contentCont = $('#content-cont'),
+                        content = $(element),
+                        uiLeft = ui.offset.left,
+                        uiTop = ui.offset.top,
+                        contLeft = contentCont.offset().left,
+                        contTop = contentCont.offset().top,
+                        contWidth = contentCont.width(),
+                        contHeight = contentCont.height();
+
+                    // if in #content-cont
+                    if (uiLeft > contLeft && uiTop > contTop) {
+                        $scope.addContent($(this).attr('id'), $scope.activePage._id);
+                        // $(this).css({top:0,left:0});
+                        // if (content.length > 1) return;
+                        // if (uiLeft < contLeft + contWidth/2) // on left
+                        //     content.before($(content).clone());
+                        // else if (uiLeft > contLeft + contWidth/2) // on right
+                        //     content.after($(content).clone());
+                    }
+                }
+            });
           }
       });
     };
