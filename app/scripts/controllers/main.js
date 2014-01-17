@@ -29,6 +29,7 @@ angular.module('pageController', [])
             $scope.newPageForm.title = '';
             $scope.pages = data;
 
+            // set activePage if none set yet, prevents bugginess
             if (!$scope.activePage)
               $scope.activePage = $scope.pages[0];
           });
@@ -106,4 +107,19 @@ angular.module('pageController', [])
           };
       }
     };
-  });
+  })
+  .directive('dragsize', function () {
+    return function (scope, element, attrs) {
+      scope.$watch("contents", function (value) {//I change here
+          var val = value || null;
+          if (val) {
+            $(element).parent('#content-cont').sortable();
+            $(element)
+              .resizable({
+                grid: $('#content-cont').width() / 10,
+                handles: 'e, w'
+              });
+          }
+      });
+    };
+});
