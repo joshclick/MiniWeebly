@@ -110,24 +110,31 @@ angular.module('pageController', [])
   })
   .directive('dragsize', function () {
     return function (scope, element, attrs) {
-      scope.$watch("contents", function (value) {//I change here
+      scope.$watch("contents", function (value) {
           var val = value || null;
           if (val) {
-            $(element).draggable({
-              cancel: '.val',
-              grid: [$('#content-cont').width() / 10, $('#content-cont').width() / 10],
-              containment: "parent"
+            $(element).parent('#content-cont').sortable({
+              cancel: '.val'
+              // grid: function(e, ui) {
+              //   return $('#grid-toggle').attr('class').indexOf('active') > -1 ?
+              //     [$('#content-cont').width() / 10, 10] : [10, 10];
+              // },
+              // containment: "#content-cont"
             });
             $(element)
               .resizable({
-                handles: 'n,e,s,w',
-                grid: $('#content-cont').width() / 10,
+                handles: 'n,e,s,w, se',
+                grid: function(e, ui) {
+                  return $('#grid-toggle').attr('class').indexOf('active') > -1 ?
+                    [$('#content-cont').width() / 10, 10] : [10, 10];
+                },
                 stop: function(e, ui) {
                   var parent = ui.element.parent();
                   ui.element.css({
                       width: ui.element.width() / parent.width() * 100 + '%',
                   });
-                }
+                },
+                containment: "#content-cont"
               });
 
             $('#content-cont').droppable();
@@ -143,6 +150,7 @@ angular.module('pageController', [])
                 drag: function(event, ui) {
                     var contentCont = $('#content-cont'),
                         content = $('.content'),
+                        contentHold = $('.content').parent('div.contHold'),
                         uiLeft = ui.offset.left,
                         uiTop = ui.offset.top,
                         contLeft = contentCont.offset().left,
@@ -152,18 +160,19 @@ angular.module('pageController', [])
 
                     // if in #content-cont
                     if (uiLeft > contLeft && uiTop > contTop) {
-                        content.css('width', '50%');
+                        contentHold.css('width', '50%');
                         if (uiLeft < contLeft + contWidth/2) // on left
-                            content.css('float', 'right');
+                            contentHold.css('float', 'right');
                         else if (uiLeft > contLeft + contWidth/2) // on right
-                            content.css('float', 'left');
+                            contentHold.css('float', 'left');
                     } else {
-                        content.css({width: '100%', float: 'left'});
+                        contentHold.css({width: '100%', float: 'left'});
                     }
                 },
                 stop: function(event, ui) {
                     var contentCont = $('#content-cont'),
                         content = $(element),
+                        contentHold = $('.content').parent('div.contHold'),
                         uiLeft = ui.offset.left,
                         uiTop = ui.offset.top,
                         contLeft = contentCont.offset().left,
@@ -174,12 +183,10 @@ angular.module('pageController', [])
                     // if in #content-cont
                     if (uiLeft > contLeft && uiTop > contTop) {
                         $scope.addContent($(this).attr('id'), $scope.activePage._id);
-                        // $(this).css({top:0,left:0});
-                        // if (content.length > 1) return;
+                        $(this).css({top:0,left:0});
                         // if (uiLeft < contLeft + contWidth/2) // on left
-                        //     content.before($(content).clone());
+
                         // else if (uiLeft > contLeft + contWidth/2) // on right
-                        //     content.after($(content).clone());
                     }
                 }
             });

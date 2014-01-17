@@ -60,7 +60,7 @@ module.exports = function(app) {
         newContent.value = 'a lot of text goes here';
         break;
       case 'image':
-        newContent.value = 'image goes here';
+        newContent.value = '<a ng-click="setImage()"><img ng-src="static/img/Image-Placeholder.png" src="static/img/Image-Placeholder.png"><p ng-hide="splashURL" class="">Add Image +</p></a>';
         break;
       case 'nav':
         newContent.value = 'what do i put here..'
