@@ -97,6 +97,38 @@ angular.module('pageController', [])
     $scope.sizeGrid = $scope.gridToggle ?
           [$('#content-cont').width() / 10, 10] : [10, 10];
     $scope.gridToggle = false;
+
+    $scope.initDrag = function () {
+      $('#content-cont').droppable();
+      $('#elements .icon').draggable({
+          zIndex: 100,
+          distance: 20,
+          containment: 'document',
+          appendTo: '#board',
+          revert: function(event) {
+              $(this).data("ui-draggable").originalPosition = { top: 0, left: 0 };
+              return !event;
+          },
+          revertDuration: 100,
+          stop: function(event, ui) {
+              var contentCont = $('#content-cont'),
+                  uiLeft = ui.offset.left,
+                  uiTop = ui.offset.top,
+                  contLeft = contentCont.offset().left,
+                  contTop = contentCont.offset().top,
+                  contWidth = contentCont.width(),
+                  contHeight = contentCont.height();
+
+              // if in #content-cont
+              if (uiLeft > contLeft && uiTop > contTop) {
+                var s = angular.element('body').scope();
+                s.addContent($(this).attr('id'), s.activePage._id);
+                $(this).css({top:0,left:0});
+              }
+          }
+      });
+    }();
+
   })
   // enable 2 way binding for contenteditable stuff
   .directive('contenteditable', function () {
@@ -123,13 +155,20 @@ angular.module('pageController', [])
           var val = value || null;
           if (val) {
             $(element).parent('#content-cont').sortable({
-              cancel: '.val'
+              cancel: '.val',
+              stop: function (e, ui) {
+                // set order in db
+                $.each($('.content'), function(i, d) {
+                  var id = $(d).attr('contentID'),
+                    idx = $('#content-cont').sortable('toArray', {attribute: 'contentID'}).indexOf(id);
+                  element.scope().editContent('order', idx, id);  
+                })
+              }
             });
             $(element)
               .resizable({
                 grid: element.scope().sizeGrid,
-                handles: 'n,e,s,w, se',
-                stop: function(e, ui) {
+                stop: function (e, ui) {
                   var parent = ui.element.parent();
                   ui.element.css({
                       width: ui.element.width() / parent.width() * 100 + '%',
@@ -140,59 +179,6 @@ angular.module('pageController', [])
                 },
                 containment: "#content-cont"
               });
-
-            $('#content-cont').droppable();
-            $('#elements .icon').draggable({
-                zIndex: 100,
-                distance: 20,
-                containment: 'document',
-                appendTo: '#board',
-                revert: function(event) {
-                    $(this).data("ui-draggable").originalPosition = { top: 0, left: 0 };
-                    return !event;
-                },
-                revertDuration: 100,
-                // drag: function(event, ui) {
-                //     var contentCont = $('#content-cont'),
-                //         content = $('.content'),
-                //         contentHold = $('.content').parent('div.contHold'),
-                //         uiLeft = ui.offset.left,
-                //         uiTop = ui.offset.top,
-                //         contLeft = contentCont.offset().left,
-                //         contTop = contentCont.offset().top,
-                //         contWidth = contentCont.width(),
-                //         contHeight = contentCont.height();
-
-                //     // if in #content-cont
-                //     if (uiLeft > contLeft && uiTop > contTop) {
-                //         contentHold.css('width', '50%');
-                //         if (uiLeft < contLeft + contWidth/2) // on left
-                //             contentHold.css('float', 'right');
-                //         else if (uiLeft > contLeft + contWidth/2) // on right
-                //             contentHold.css('float', 'left');
-                //     } else {
-                //         contentHold.css({width: '100%', float: 'left'});
-                //     }
-                // },
-                stop: function(event, ui) {
-                    var contentCont = $('#content-cont'),
-                        content = $(element),
-                        contentHold = $('.content').parent('div.contHold'),
-                        uiLeft = ui.offset.left,
-                        uiTop = ui.offset.top,
-                        contLeft = contentCont.offset().left,
-                        contTop = contentCont.offset().top,
-                        contWidth = contentCont.width(),
-                        contHeight = contentCont.height();
-
-                    // if in #content-cont
-                    if (uiLeft > contLeft && uiTop > contTop) {
-                      var s = element.scope() ? element.scope() : $scope
-                      s.addContent($(this).attr('id'), s.activePage._id);
-                      $(this).css({top:0,left:0});
-                    }
-                }
-            });
           }
       });
     };

@@ -98,6 +98,16 @@ module.exports = function(app) {
             });
           });
         break;
+      case 'order':
+        Content.findOneAndUpdate(
+          { _id: req.body.id },
+          { order: req.body.val },
+          function (err, content) {
+            Content.find(function (err, contents) {
+              res.json(contents);
+            });
+          });
+        break;
     }
   });
 

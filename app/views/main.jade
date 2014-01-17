@@ -46,13 +46,14 @@ block content
         span {{page.pageName}}
     #content-cont
       .content(
-        ng-repeat='content in contents | filter:filterContent'
+        ng-repeat='content in contents |  orderBy:"order" | filter:filterContent'
         ng-model='activePage'
         ng-mouseover='hover=true'
         ng-mouseleave='hover=false'
         ng-class='{hover: hover}'
         ng-style='{width: content.width + "%"}'
         contentID='{{content._id}}'
+        order="{{content.order}}"
         dragsize
       )
         .del-icon(ng-show='hover', ng-click='removeContent(content._id)')

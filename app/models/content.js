@@ -5,5 +5,6 @@ module.exports = mongoose.model('Content', {
   pageID: String,
   type  : String,
   value : String,
-  width : { type: Number, default: 100 }
+  width : { type: Number, default: 100 },
+  order : { type: Number, default: 100 }
 });
