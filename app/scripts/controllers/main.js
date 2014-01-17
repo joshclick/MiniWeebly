@@ -87,6 +87,15 @@ angular.module('pageController', [])
         });
     };
 
+    $scope.setContentGrid = function () {
+      $scope.gridToggle = !$scope.gridToggle;
+      var sizeGrid = $scope.gridToggle ?
+          [$('#content-cont').width() / 10, 10] : [10, 10];
+      $('.content').resizable('option', 'grid', sizeGrid);
+    };
+
+    $scope.sizeGrid = $scope.gridToggle ?
+          [$('#content-cont').width() / 10, 10] : [10, 10];
     $scope.gridToggle = false;
   })
   // enable 2 way binding for contenteditable stuff
@@ -118,19 +127,16 @@ angular.module('pageController', [])
             });
             $(element)
               .resizable({
+                grid: element.scope().sizeGrid,
                 handles: 'n,e,s,w, se',
-                grid: function(e, ui) {
-                  return $('#grid-toggle').attr('class').indexOf('active') > -1 ?
-                    [$('#content-cont').width() / 10, 10] : [10, 10];
-                },
                 stop: function(e, ui) {
                   var parent = ui.element.parent();
                   ui.element.css({
                       width: ui.element.width() / parent.width() * 100 + '%',
                   });
                   // update in model
-                  var newWidth = parseFloat($($('.content')[0]).attr('style').split(':')[1].slice(1,7));
-                  $scope.editContent('width', newWidth, $(this).attr('contentID'));
+                  var newWidth = parseFloat($($(element)[0]).attr('style').split(':')[1].slice(1,7));
+                  element.scope().editContent('width', newWidth, $(this).attr('contentID'));
                 },
                 containment: "#content-cont"
               });
@@ -140,15 +146,12 @@ angular.module('pageController', [])
                 zIndex: 100,
                 distance: 20,
                 containment: 'document',
+                appendTo: '#board',
                 revert: function(event) {
                     $(this).data("ui-draggable").originalPosition = { top: 0, left: 0 };
                     return !event;
                 },
                 revertDuration: 100,
-                stop: function (e, ui) {
-                  $(this).css({top:0,left:0});
-                  $scope.addContent($(this).attr('id'), $scope.activePage._id);
-                }
                 // drag: function(event, ui) {
                 //     var contentCont = $('#content-cont'),
                 //         content = $('.content'),
@@ -171,26 +174,24 @@ angular.module('pageController', [])
                 //         contentHold.css({width: '100%', float: 'left'});
                 //     }
                 // },
-                // stop: function(event, ui) {
-                //     var contentCont = $('#content-cont'),
-                //         content = $(element),
-                //         contentHold = $('.content').parent('div.contHold'),
-                //         uiLeft = ui.offset.left,
-                //         uiTop = ui.offset.top,
-                //         contLeft = contentCont.offset().left,
-                //         contTop = contentCont.offset().top,
-                //         contWidth = contentCont.width(),
-                //         contHeight = contentCont.height();
+                stop: function(event, ui) {
+                    var contentCont = $('#content-cont'),
+                        content = $(element),
+                        contentHold = $('.content').parent('div.contHold'),
+                        uiLeft = ui.offset.left,
+                        uiTop = ui.offset.top,
+                        contLeft = contentCont.offset().left,
+                        contTop = contentCont.offset().top,
+                        contWidth = contentCont.width(),
+                        contHeight = contentCont.height();
 
-                //     // if in #content-cont
-                //     if (uiLeft > contLeft && uiTop > contTop) {
-                //         $scope.addContent($(this).attr('id'), $scope.activePage._id);
-                //         $(this).css({top:0,left:0});
-                //         // if (uiLeft < contLeft + contWidth/2) // on left
-
-                //         // else if (uiLeft > contLeft + contWidth/2) // on right
-                //     }
-                // }
+                    // if in #content-cont
+                    if (uiLeft > contLeft && uiTop > contTop) {
+                      var s = element.scope() ? element.scope() : $scope
+                      s.addContent($(this).attr('id'), s.activePage._id);
+                      $(this).css({top:0,left:0});
+                    }
+                }
             });
           }
       });
