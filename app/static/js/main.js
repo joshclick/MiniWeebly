@@ -1,42 +1,3 @@
-var refreshEHandlers = function() {
-    $('#templates .template-button').unbind();
-    $('#templates .template-button').hover(
-        function() { $(this).find('.icon').addClass('hover'); },
-        function() { $(this).find('.icon').removeClass('hover'); }
-    );
-
-    // for initiating editing
-    $('#templates .icon.edit').unbind();
-    $('#templates .icon.edit').click(function() {
-        $(this).parent().find('input')
-            .attr('disabled', false)
-            .focus();
-    });
-
-    // doing the editing
-    $('.template-button > input.edit').unbind();
-    $('.template-button > input.edit').bind('keyup', function(e) {
-        if (e.keyCode === 13) {
-            $(this).attr('disabled', true);
-        }
-        $('#pages .' + $(this).parent().attr('id') + ' span').text($(this).val());
-    }).focusout(function() {
-        $(this).attr('disabled', true);
-    });
-
-    // for editing content
-    $('.content > div').unbind();
-    $('.content > div').focusin(function() { $(this).children('.del-icon').show(); });
-    $('.content > div').focusout(function() { $(this).children('.del-icon').hide(); });
-
-    // for deleting content
-    $('#content-cont .del-icon').unbind();
-    $('#content-cont .del-icon').click(function() {
-        $(this).parent().remove();
-    });
-}
-refreshEHandlers();
-
 // for draggable icons
 $('#content-cont').droppable();
 $('#elements .icon').draggable({
@@ -49,7 +10,7 @@ $('#elements .icon').draggable({
     },
     revertDuration: 100,
     drag: function(event, ui) {
-        var contentCont = $('#content-cont'),
+        var contentCont = $('#board'),
             content = $('.content'),
             uiLeft = ui.offset.left,
             uiTop = ui.offset.top,
@@ -73,7 +34,7 @@ $('#elements .icon').draggable({
         }
     },
     stop: function(event, ui) {
-        var contentCont = $('#content-cont'),
+        var contentCont = $('#board'),
             content = $('.content'),
             uiLeft = ui.offset.left,
             uiTop = ui.offset.top,
@@ -91,7 +52,5 @@ $('#elements .icon').draggable({
             else if (uiLeft > contLeft + contWidth/2) // on right
                 content.after($(content).clone());
         }
-
-        refreshEHandlers();
     }
 });
