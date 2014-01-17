@@ -1,15 +1,1 @@
-'use strict';
-
-angular.module('miniweeblyApp', [
-  'ngRoute'
-])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+angular.module('miniweeblyApp', ['pageController', 'pageService']);

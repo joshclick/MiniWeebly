@@ -1,0 +1,22 @@
+<!doctype html>
+html
+  head
+    title Mini-Weebly
+    link(rel="stylesheet/less", type="text/css", href='styles/main.less')
+    script(src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.6.0/less.min.js")
+
+  body(ng-app='miniweeblyApp' ng-controller="mainController")
+    header
+      img(src='static/img/Weebly-Logo.png', alt='Weebly Logo')
+    #main-cont(ng-view='')
+      block content
+
+    script(src='bower_components/jquery/jquery.js')
+    script(src='bower_components/angular/angular.js')
+    script(src='bower_components/jquery-ui/ui/jquery-ui.js')
+
+    script(src='scripts/controllers/main.js')
+    script(src='scripts/services/page.js')
+    script(src='scripts/app.js')
+
+    script(src='static/js/main.js')

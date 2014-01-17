@@ -1,8 +1,12 @@
 'use strict';
 
-angular.module('miniweeblyApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.currPageID = 1;
+angular.module('pageController', [])
+  .controller('mainController', function ($scope, $http, Pages) {
+    Pages.get()
+      .success(function (data) {
+        $scope.pages = data;
+        $scope.activePage = $scope.pages[0];
+      });
     $scope.defaultPage = {
       pageID: null,
       pageName: 'Page',
@@ -16,64 +20,35 @@ angular.module('miniweeblyApp')
         }
       ]
     };
-    $scope.pages = [{
-        pageID: 0,
-        pageName: 'Page',
-        contents: [
-          {
-            type: 'title',
-            value: 'Page 1',
-          },{
-            type: 'text',
-            value: 'Lala lots of content. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Maecenas sed diam eget risus varius blandit sit amet non magna. \n Aenean lacinia bibendum nulla sed consectetur. Cum sociis natoque penatibus et magnis dis parturient montes. nascetur ridiculus mus. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta sem malesuada magna mollis euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-          }
-        ]
-      },{
-        pageID: 1,
-        pageName: 'Another',
-        contents: [
-          {
-            type: 'title',
-            value: 'Page 2',
-          },{
-            type: 'text',
-            value: 'Real content yo'
-          }
-        ]
-      },
-    ];
-    $scope.activePage = $scope.pages[0];
 
     $scope.deletePage = function (id) {
-      // deletes pages
-      $scope.pages = $scope.pages.filter(function (page) {
-        return page.pageID !== id;
-      });
-
-      // sets new activepage if active page was deleted
-      if (id === $scope.activePage.pageID) {
-        $scope.activePage = $scope.pages[0];
-      }
+      Pages.delete(id)
+        .success(function (data) {
+          $scope.pages = data;
+          $scope.activePage = $scope.pages[0];
+        });
 
       // need to add shrink and disappear animation
     };
-    $scope.addPage = function (title) {
-      if ($scope.pages.length < 7 && title.length > 0) {
-        // add to pages
-        var newPage = angular.copy($scope.defaultPage);
-        newPage.pageID = ++$scope.currPageID;
-        newPage.pageName = title;
-        $scope.pages.push(newPage);
-
-        // reset text for add page
-        $scope.newPageText = '';
-      } else {
-        console.log('Too many pages!');
+    $scope.addPage = function () {
+      if (!$.isEmptyObject($scope.newPageForm)) {
+        Pages.create($scope.newPageForm)
+          .success(function (data) {
+            $scope.newPageForm.title = '';
+            $scope.pages = data;
+          });
       }
     };
+    $scope.editPageTitle = function (newTitle, id) {
+      Pages.edit({newTitle: newTitle, id: id})
+        .success(function (data) {
+          $scope.pages = data;
+        });
+    };
+
     $scope.activatePage = function (id) {
       $scope.activePage = $scope.pages.filter(function (d) {
-        return d.pageID === id;
+        return d._id === id;
       })[0];
     };
 
