@@ -113,16 +113,15 @@ angular.module('pageController', [])
       scope.$watch("contents", function (value) {//I change here
           var val = value || null;
           if (val) {
-            $(element).parent('#content-cont').sortable({
-              create: function () {
-                $(this).height($(this).height());
-              }
+            $(element).draggable({
+              cancel: '.val',
+              grid: [$('#content-cont').width() / 10, $('#content-cont').width() / 10],
+              containment: "parent"
             });
             $(element)
               .resizable({
-                animate: true,
+                handles: 'n,e,s,w',
                 grid: $('#content-cont').width() / 10,
-                handles: 'e, w',
                 stop: function(e, ui) {
                   var parent = ui.element.parent();
                   ui.element.css({
@@ -143,7 +142,7 @@ angular.module('pageController', [])
                 revertDuration: 100,
                 drag: function(event, ui) {
                     var contentCont = $('#content-cont'),
-                        content = $(element),
+                        content = $('.content'),
                         uiLeft = ui.offset.left,
                         uiTop = ui.offset.top,
                         contLeft = contentCont.offset().left,
@@ -151,16 +150,13 @@ angular.module('pageController', [])
                         contWidth = contentCont.width(),
                         contHeight = contentCont.height();
 
-                    if (content.length > 1) return;
-                    if ($(this).attr('id') !== 'text') return;
-
                     // if in #content-cont
                     if (uiLeft > contLeft && uiTop > contTop) {
-                        content.css({width: '50%'});
+                        content.css('width', '50%');
                         if (uiLeft < contLeft + contWidth/2) // on left
-                            content.css({float: 'right'});
+                            content.css('float', 'right');
                         else if (uiLeft > contLeft + contWidth/2) // on right
-                            content.css({float: 'left'});
+                            content.css('float', 'left');
                     } else {
                         content.css({width: '100%', float: 'left'});
                     }
