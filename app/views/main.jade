@@ -44,10 +44,6 @@ block content
         ng-click='activatePage(page._id)'
       )
         span {{page.pageName}}
-    #splash
-      a(ng-click='setImage()')
-        img(ng-src='{{splashURL || defaultSplash}}')
-        p(ng-hide='splashURL') Add Image +
     #content-cont
       .content(
         ng-repeat='content in contents | filter:filterContent'
@@ -55,11 +51,13 @@ block content
         ng-mouseover='hover=true'
         ng-mouseleave='hover=false'
         ng-class='{hover: hover}'
+        ng-style='{width: content.width + "%"}'
+        contentID='{{content._id}}'
         dragsize
       )
         .del-icon(ng-show='hover', ng-click='removeContent(content._id)')
         .val(ng-class='content.type'
           contenteditable='true'
           ng-model='content.value'
-          ng-change='editContent(content.value, content._id)'
+          ng-change='editContent("value", content.value, content._id)'
         )

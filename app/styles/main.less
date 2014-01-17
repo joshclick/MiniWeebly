@@ -314,28 +314,6 @@ header {
 			}
 		}
 	}
-	#splash {
-		margin: 20px;
-        padding: 20px;
-		background: #eff2f5;
-		min-height: 240px;
-		border: 2px solid #c0ccd8;
-		border-radius: 3px;
-
-		a {
-			display: block;
-			font-size: 12.45px;
-			color: #c0ccd8;
-			text-align: center;
-			text-transform: uppercase;
-            cursor: pointer;
-
-			img {
-				margin: 45px auto -10px;
-                max-height: 300px
-			}
-		}
-	}
 
   #content-cont {
     width: 100%;
@@ -344,7 +322,6 @@ header {
 	.content {
 		float: left;
 		color: #4f657b;
-		width: 100%;
     display: inline-block;
     cursor: move;
 
@@ -369,15 +346,35 @@ header {
 			line-height: 24px;
 		}
 
-        .del-icon {
-            z-index: -100;
-            outline: none;
-            margin-top: -3px;
-            margin-right: -2px;
-            float: right;
-            width: 38px;
-            background: url('/static/img/Delete-Element.png') -9px -8px;
-            cursor: pointer;
+    .image {
+      background: #eff2f5;
+      border: 2px solid #c0ccd8;
+      border-radius: 3px;
+
+      a {
+        display: block;
+        font-size: 12.45px;
+        color: #c0ccd8;
+        text-align: center;
+        text-transform: uppercase;
+              cursor: pointer;
+
+        img {
+          margin: 45px auto -10px;
+                  max-height: 300px
         }
+      }
+    }
+
+    .del-icon {
+      z-index: -100;
+      outline: none;
+      margin-top: -3px;
+      margin-right: -2px;
+      float: right;
+      width: 38px;
+      background: url('/static/img/Delete-Element.png') -9px -8px;
+      cursor: pointer;
+    }
 	}
 }

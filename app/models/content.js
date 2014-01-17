@@ -4,5 +4,6 @@ var mongoose = require('mongoose');
 module.exports = mongoose.model('Content', {
   pageID: String,
   type  : String,
-  value : String
+  value : String,
+  width : { type: Number, default: 100 }
 });

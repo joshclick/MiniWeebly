@@ -72,8 +72,8 @@ angular.module('pageController', [])
         });
     };
 
-    $scope.editContent = function (value, id) {
-      Contents.edit({val: value, id: id})
+    $scope.editContent = function (key, value, id) {
+      Contents.edit({key: key, val: value, id: id})
         .success(function (data) {
           $scope.contents = data;
         });
@@ -115,11 +115,6 @@ angular.module('pageController', [])
           if (val) {
             $(element).parent('#content-cont').sortable({
               cancel: '.val'
-              // grid: function(e, ui) {
-              //   return $('#grid-toggle').attr('class').indexOf('active') > -1 ?
-              //     [$('#content-cont').width() / 10, 10] : [10, 10];
-              // },
-              // containment: "#content-cont"
             });
             $(element)
               .resizable({
@@ -133,6 +128,9 @@ angular.module('pageController', [])
                   ui.element.css({
                       width: ui.element.width() / parent.width() * 100 + '%',
                   });
+                  // update in model
+                  var newWidth = parseFloat($($('.content')[0]).attr('style').split(':')[1].slice(1,7));
+                  $scope.editContent('width', newWidth, $(this).attr('contentID'));
                 },
                 containment: "#content-cont"
               });
@@ -147,48 +145,52 @@ angular.module('pageController', [])
                     return !event;
                 },
                 revertDuration: 100,
-                drag: function(event, ui) {
-                    var contentCont = $('#content-cont'),
-                        content = $('.content'),
-                        contentHold = $('.content').parent('div.contHold'),
-                        uiLeft = ui.offset.left,
-                        uiTop = ui.offset.top,
-                        contLeft = contentCont.offset().left,
-                        contTop = contentCont.offset().top,
-                        contWidth = contentCont.width(),
-                        contHeight = contentCont.height();
-
-                    // if in #content-cont
-                    if (uiLeft > contLeft && uiTop > contTop) {
-                        contentHold.css('width', '50%');
-                        if (uiLeft < contLeft + contWidth/2) // on left
-                            contentHold.css('float', 'right');
-                        else if (uiLeft > contLeft + contWidth/2) // on right
-                            contentHold.css('float', 'left');
-                    } else {
-                        contentHold.css({width: '100%', float: 'left'});
-                    }
-                },
-                stop: function(event, ui) {
-                    var contentCont = $('#content-cont'),
-                        content = $(element),
-                        contentHold = $('.content').parent('div.contHold'),
-                        uiLeft = ui.offset.left,
-                        uiTop = ui.offset.top,
-                        contLeft = contentCont.offset().left,
-                        contTop = contentCont.offset().top,
-                        contWidth = contentCont.width(),
-                        contHeight = contentCont.height();
-
-                    // if in #content-cont
-                    if (uiLeft > contLeft && uiTop > contTop) {
-                        $scope.addContent($(this).attr('id'), $scope.activePage._id);
-                        $(this).css({top:0,left:0});
-                        // if (uiLeft < contLeft + contWidth/2) // on left
-
-                        // else if (uiLeft > contLeft + contWidth/2) // on right
-                    }
+                stop: function (e, ui) {
+                  $(this).css({top:0,left:0});
+                  $scope.addContent($(this).attr('id'), $scope.activePage._id);
                 }
+                // drag: function(event, ui) {
+                //     var contentCont = $('#content-cont'),
+                //         content = $('.content'),
+                //         contentHold = $('.content').parent('div.contHold'),
+                //         uiLeft = ui.offset.left,
+                //         uiTop = ui.offset.top,
+                //         contLeft = contentCont.offset().left,
+                //         contTop = contentCont.offset().top,
+                //         contWidth = contentCont.width(),
+                //         contHeight = contentCont.height();
+
+                //     // if in #content-cont
+                //     if (uiLeft > contLeft && uiTop > contTop) {
+                //         contentHold.css('width', '50%');
+                //         if (uiLeft < contLeft + contWidth/2) // on left
+                //             contentHold.css('float', 'right');
+                //         else if (uiLeft > contLeft + contWidth/2) // on right
+                //             contentHold.css('float', 'left');
+                //     } else {
+                //         contentHold.css({width: '100%', float: 'left'});
+                //     }
+                // },
+                // stop: function(event, ui) {
+                //     var contentCont = $('#content-cont'),
+                //         content = $(element),
+                //         contentHold = $('.content').parent('div.contHold'),
+                //         uiLeft = ui.offset.left,
+                //         uiTop = ui.offset.top,
+                //         contLeft = contentCont.offset().left,
+                //         contTop = contentCont.offset().top,
+                //         contWidth = contentCont.width(),
+                //         contHeight = contentCont.height();
+
+                //     // if in #content-cont
+                //     if (uiLeft > contLeft && uiTop > contTop) {
+                //         $scope.addContent($(this).attr('id'), $scope.activePage._id);
+                //         $(this).css({top:0,left:0});
+                //         // if (uiLeft < contLeft + contWidth/2) // on left
+
+                //         // else if (uiLeft > contLeft + contWidth/2) // on right
+                //     }
+                // }
             });
           }
       });
