@@ -57,8 +57,8 @@ angular.module('pageController', [])
 
     // filtering content for display
     $scope.filterContent = function (content) {
-      return content.pageID == $scope.activePage._id;
-    }
+      return content.pageID === $scope.activePage._id;
+    };
 
     // stuff for editing content
     $scope.removeContent = function (id) {
@@ -68,9 +68,16 @@ angular.module('pageController', [])
         });
     };
 
-    // stuff for adding content (title, text, image, nav)
-    $scope.addContent = function (type, id) {
-      Contents.create({type: type, id: id})
+    $scope.editContent = function (value, id) {
+      Contents.edit({val: value, id: id})
+        .success(function (data) {
+          $scope.contents = data;
+        });
+    };
+
+    // stuff for editing content
+    $scope.removeContent = function (id) {
+      Contents.delete(id)
         .success(function (data) {
           $scope.contents = data;
         });

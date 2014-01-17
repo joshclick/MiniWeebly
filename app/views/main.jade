@@ -40,4 +40,4 @@ block content
     #content-cont
       .content(ng-repeat='content in contents | filter:filterContent', ng-model='activePage', ng-mouseover='hover=true', ng-mouseleave='hover=false')
         .del-icon(ng-show='hover', ng-click='removeContent(content._id)')
-        div(class="{{content.type}}", contenteditable='true', ng-class='{hover: hover}', ng-model='content.value')
+        div(class="{{content.type}}", contenteditable='true', ng-class='{hover: hover}', ng-model='content.value', ng-change='editContent(content.value, content._id)')

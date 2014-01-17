@@ -9,8 +9,8 @@ angular.module('contentService', [])
     create : function (contentData) {
       return $http.post('/api/contents', contentData);
     },
-    edit   : function (newPageData) {
-      return $http.post('/api/contents/edit', newPageData);
+    edit   : function (newContData) {
+      return $http.post('/api/contents/edit', newContData);
     },
     delete : function (id) {
       return $http.delete('/api/contents/del/' + id);

@@ -76,6 +76,17 @@ module.exports = function(app) {
     );
   });
 
+  app.post('/api/contents/edit', function(req, res) {
+    Content.findOneAndUpdate(
+      { _id: req.body.id },
+      { value: req.body.val },
+      function (err, content) {
+        Content.find(function (err, contents) {
+          res.json(contents);
+        });
+      });
+  });
+
   app.delete('/api/contents/del/:cont_id', function(req, res) {
     Content.remove(
       { _id: req.params.cont_id },
